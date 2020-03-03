@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Website", "src\LocadoraCarros.Website\LocadoraCarros.Website.csproj", "{493749AA-3F74-47CD-976F-F14C9661CF61}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Services", "src\LocadoraCarros.Services\LocadoraCarros.Services.csproj", "{CC6F991D-9EEF-43CE-92CA-B0CBF9B66825}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraCarros.Domain", "src\LocadoraCarros.Domain\LocadoraCarros.Domain.csproj", "{C3AC3F43-1117-4BB5-B1BC-377631CC4BB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7A5CBF3A-C510-4360-A254-E25AE127AFC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6B48FDA4-34ED-4F2C-A797-FC4F1B2B065D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraCarros.UnitTest", "test\LocadoraCarros.UnitTest\LocadoraCarros.UnitTest.csproj", "{F429230B-AFE4-43A7-B4CB-B957C1EA43FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{493749AA-3F74-47CD-976F-F14C9661CF61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{493749AA-3F74-47CD-976F-F14C9661CF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{493749AA-3F74-47CD-976F-F14C9661CF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{493749AA-3F74-47CD-976F-F14C9661CF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC6F991D-9EEF-43CE-92CA-B0CBF9B66825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC6F991D-9EEF-43CE-92CA-B0CBF9B66825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC6F991D-9EEF-43CE-92CA-B0CBF9B66825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC6F991D-9EEF-43CE-92CA-B0CBF9B66825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3AC3F43-1117-4BB5-B1BC-377631CC4BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3AC3F43-1117-4BB5-B1BC-377631CC4BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3AC3F43-1117-4BB5-B1BC-377631CC4BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3AC3F43-1117-4BB5-B1BC-377631CC4BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F429230B-AFE4-43A7-B4CB-B957C1EA43FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F429230B-AFE4-43A7-B4CB-B957C1EA43FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F429230B-AFE4-43A7-B4CB-B957C1EA43FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F429230B-AFE4-43A7-B4CB-B957C1EA43FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{493749AA-3F74-47CD-976F-F14C9661CF61} = {7A5CBF3A-C510-4360-A254-E25AE127AFC5}
+		{CC6F991D-9EEF-43CE-92CA-B0CBF9B66825} = {7A5CBF3A-C510-4360-A254-E25AE127AFC5}
+		{C3AC3F43-1117-4BB5-B1BC-377631CC4BB3} = {7A5CBF3A-C510-4360-A254-E25AE127AFC5}
+		{F429230B-AFE4-43A7-B4CB-B957C1EA43FC} = {6B48FDA4-34ED-4F2C-A797-FC4F1B2B065D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05F1785E-0F15-48AD-907D-6C5CDA6EE95B}
+	EndGlobalSection
+EndGlobal
