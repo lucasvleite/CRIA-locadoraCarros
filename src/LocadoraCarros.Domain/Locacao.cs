@@ -9,7 +9,7 @@ namespace LocadoraCarros.Domain
     {
         public IEnumerable<DateTime> Datas { get; set; }
         public TipoLocacao TipoLocacao { get; set; }
-        public Loja Locadora { get; set; }
+        public Empresa Locadora { get; set; }
         public int NumeroPassageiros { get; set; }
         public decimal Valor { get; set; }
     }
