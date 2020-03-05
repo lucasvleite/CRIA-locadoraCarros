@@ -1,6 +1,6 @@
 ﻿namespace LocadoraCarros.Domain.Enums
 {
-    public static class Empresas
+    public static class EmpresasEnum
     {
         public enum Loja
         {

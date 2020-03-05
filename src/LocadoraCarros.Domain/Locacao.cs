@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static LocadoraCarros.Domain.Enums.Empresas;
-using static LocadoraCarros.Domain.Enums.TiposLocacoes;
+using static LocadoraCarros.Domain.Enums.TiposLocacoesEnum;
 
 namespace LocadoraCarros.Domain
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static LocadoraCarros.Domain.Enums.Empresas;
-using static LocadoraCarros.Domain.Enums.TiposLocacoes;
+using static LocadoraCarros.Domain.Enums.EmpresasEnum;
+using static LocadoraCarros.Domain.Enums.TiposLocacoesEnum;
 
 namespace LocadoraCarros.Domain
 {
@@ -12,8 +12,9 @@ namespace LocadoraCarros.Domain
         public int ValorSemana { get; set; }
         public int ValorFimSemana { get; set; }
         public int NumeroMaximoPassageiros { get; set; }
+        public decimal ValorLocacao { get; set; }
 
-        public Empresa(Loja loja, TipoLocacao tipo)
+        public Empresa(Loja loja, TipoLocacao tipo, IEnumerable<DateTime> datas)
         {
             Locadora = loja;
 
@@ -23,14 +24,16 @@ namespace LocadoraCarros.Domain
                 ObterWestCar(tipo);
             else if (loja.Equals(2))
                 ObterNorthCar(tipo);
+
+            ValorLocacao = CalcularValor(datas);
         }
 
-        public decimal CalcularMenorValor(List<DateTime> datas, int numeroPassageiros)
+        public decimal CalcularValor(IEnumerable<DateTime> datas)
         {
             int diasFimSemana = datas.Select(d => d.DayOfWeek == DayOfWeek.Saturday || d.DayOfWeek == DayOfWeek.Sunday).Count();
             int diasSemana = datas.Select(d => d.DayOfWeek != DayOfWeek.Saturday || d.DayOfWeek != DayOfWeek.Sunday).Count();
 
-            return 0;
+            return diasSemana * ValorSemana + diasFimSemana * ValorFimSemana;
         }
 
         private void ObterSouthCar(TipoLocacao tipo)

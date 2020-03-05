@@ -2,7 +2,7 @@
 
 namespace LocadoraCarros.Domain.Enums
 {
-    public static class TiposLocacoes
+    public static class TiposLocacoesEnum
     {
         public enum TipoLocacao
         {

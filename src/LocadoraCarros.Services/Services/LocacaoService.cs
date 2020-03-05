@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using static LocadoraCarros.Domain.Enums.TiposLocacoes;
+using static LocadoraCarros.Domain.Enums.EmpresasEnum;
+using static LocadoraCarros.Domain.Enums.TiposLocacoesEnum;
 
 namespace LocadoraCarros.Services.Services
 {
@@ -15,16 +17,12 @@ namespace LocadoraCarros.Services.Services
         {
         }
 
-        public static async Task<IEnumerable<Locacao>> VerificarCarroMaisBarato(IFormFile arquivo)
+        public static IEnumerable<Locacao> VerificarCarroMaisBarato(IFormFile arquivo)
         {
             var locacoes = ObterInformacoesLocacaoDoArquivo(new StreamReader(arquivo.OpenReadStream()));
-            VerificarDisponibilidadeCarros(locacoes);
+            foreach (var item in locacoes)
+                item.Locadora = BuscarEmpresaComMenorValor(item.TipoLocacao, item.Datas, item.NumeroPassageiros);
             return locacoes;
-        }
-
-        private static void VerificarDisponibilidadeCarros(IEnumerable<Locacao> locacoes)
-        {
-            throw new NotImplementedException();
         }
 
         private static IEnumerable<Locacao> ObterInformacoesLocacaoDoArquivo(StreamReader lerArquivo)
@@ -53,5 +51,19 @@ namespace LocadoraCarros.Services.Services
 
             return listaDatas;
         }
+
+        public static Empresa BuscarEmpresaComMenorValor(TipoLocacao tipo ,IEnumerable<DateTime> datas, int numeroPassageiros)
+        {
+            List<Empresa> empresas = new List<Empresa>();
+            foreach (var item in (Loja[])Enum.GetValues(typeof(Loja)))
+                empresas.Add(new Empresa(item, tipo, datas));
+
+            empresas = empresas.Where(e => e.NumeroMaximoPassageiros <= numeroPassageiros).ToList();
+
+            var menorValor = empresas.Select(e => e.ValorLocacao).Min();
+
+            return empresas.Where(e => e.ValorLocacao == menorValor).FirstOrDefault();
+        }
+
     }
 }
