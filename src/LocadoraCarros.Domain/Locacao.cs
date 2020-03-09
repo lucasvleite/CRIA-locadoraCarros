@@ -10,6 +10,5 @@ namespace LocadoraCarros.Domain
         public TipoLocacao TipoLocacao { get; set; }
         public Empresa Locadora { get; set; }
         public int NumeroPassageiros { get; set; }
-        public decimal Valor { get; set; }
     }
 }

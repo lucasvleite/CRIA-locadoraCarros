@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using static LocadoraCarros.Domain.Enums.EmpresasEnum;
+using static LocadoraCarros.Domain.Enums.TiposCarroEnum;
 using static LocadoraCarros.Domain.Enums.TiposLocacoesEnum;
 
 namespace LocadoraCarros.Domain
@@ -9,6 +10,7 @@ namespace LocadoraCarros.Domain
     public class Empresa
     {
         public Loja Locadora{ get; set; }
+        public TiposCarro TipoCarro { get; set; }
         public int ValorSemana { get; set; }
         public int ValorFimSemana { get; set; }
         public int NumeroMaximoPassageiros { get; set; }
@@ -18,29 +20,30 @@ namespace LocadoraCarros.Domain
         {
             Locadora = loja;
 
-            if (loja.Equals(0))
+            if (Loja.SouthCar.Equals(loja))
                 ObterSouthCar(tipo);
-            else if (loja.Equals(1))
+            else if (Loja.WestCar.Equals(loja))
                 ObterWestCar(tipo);
-            else if (loja.Equals(2))
+            else if (Loja.NorthCar.Equals(loja))
                 ObterNorthCar(tipo);
 
             ValorLocacao = CalcularValor(datas);
         }
 
-        public decimal CalcularValor(IEnumerable<DateTime> datas)
+        private decimal CalcularValor(IEnumerable<DateTime> datas)
         {
             int diasFimSemana = datas.Select(d => d.DayOfWeek == DayOfWeek.Saturday || d.DayOfWeek == DayOfWeek.Sunday).Count();
-            int diasSemana = datas.Select(d => d.DayOfWeek != DayOfWeek.Saturday || d.DayOfWeek != DayOfWeek.Sunday).Count();
+            int diasSemana = datas.Select(d => d.DayOfWeek != DayOfWeek.Saturday && d.DayOfWeek != DayOfWeek.Sunday).Count();
 
             return diasSemana * ValorSemana + diasFimSemana * ValorFimSemana;
         }
 
         private void ObterSouthCar(TipoLocacao tipo)
         {
+            TipoCarro = TiposCarro.Compacto;
             NumeroMaximoPassageiros = 4;
 
-            if (tipo.Equals(1))
+            if (TipoLocacao.Premium.Equals(tipo))
             {
                 this.ValorSemana = 150;
                 this.ValorFimSemana = 90;
@@ -54,9 +57,10 @@ namespace LocadoraCarros.Domain
 
         private void ObterWestCar(TipoLocacao tipo)
         {
+            TipoCarro = TiposCarro.Esportivo;
             NumeroMaximoPassageiros = 2;
 
-            if (tipo.Equals(1))
+            if (TipoLocacao.Premium.Equals(tipo))
             {
                 this.ValorSemana = 150;
                 this.ValorFimSemana = 90;
@@ -70,9 +74,10 @@ namespace LocadoraCarros.Domain
 
         private void ObterNorthCar(TipoLocacao tipo)
         {
+            TipoCarro = TiposCarro.SUV;
             NumeroMaximoPassageiros = 7;
 
-            if (tipo.Equals(1))
+            if (TipoLocacao.Premium.Equals(tipo))
             {
                 this.ValorSemana = 580;
                 this.ValorFimSemana = 590;

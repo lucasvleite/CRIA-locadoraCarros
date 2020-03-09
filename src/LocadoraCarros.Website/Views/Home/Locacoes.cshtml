@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Clientes";
+}
+@model List<LocadoraCarros.Services.ViewModel.LocacaoViewModel>
+<h3>Lista de Clientes</h3>
+
+<table class="table table-responsive table-striped">
+    <thead class="thead-inverse">
+        <tr>
+            <td> * </td>
+            <td>Tipo de Cliente</td>
+            <td>Número Passageiros</td>
+            <td>Data Inicial</td>
+            <td>Data Final</td>
+            <td>Tipo de carro</td>
+            <td>Empresa Selecionada</td>
+            <td>Valor Total</td>
+        </tr>
+    </thead>
+    <tbody class="table-striped">
+        @{
+            var contador = 0;
+            foreach (var item in Model)
+            {
+                contador++;
+                <tr>
+                    <td>@contador</td>
+                    <td>@item.TipoCliente</td>
+                    <td>@item.QuantidadePassageiros</td>
+                    <td>@item.MenorData</td>
+                    <td>@item.MaiorData</td>
+                    <td>@item.TipoCarro</td>
+                    <td>@item.NomeEmpresa</td>
+                    <td><b>R$ @item.Valor</b></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,28 +1,38 @@
-﻿using LocadoraCarros.Domain;
+﻿using AutoMapper;
+using LocadoraCarros.Domain;
+using LocadoraCarros.Services.Interfaces;
+using LocadoraCarros.Services.ViewModel;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using static LocadoraCarros.Domain.Enums.EmpresasEnum;
 using static LocadoraCarros.Domain.Enums.TiposLocacoesEnum;
 
 namespace LocadoraCarros.Services.Services
 {
-    public class LocacaoService
+    public class LocacaoService : ILocacaoService
     {
-        public LocacaoService()
+        private readonly IMapper _mapper;
+
+        public LocacaoService(IMapper mapper)
         {
+            _mapper = mapper;
         }
 
-        public static IEnumerable<Locacao> VerificarCarroMaisBarato(IFormFile arquivo)
+        public IEnumerable<LocacaoViewModel> VerificarCarroMaisBarato(IFormFile arquivo)
         {
+            var retorno = new List<LocacaoViewModel>();
+
             var locacoes = ObterInformacoesLocacaoDoArquivo(new StreamReader(arquivo.OpenReadStream()));
             foreach (var item in locacoes)
-                item.Locadora = BuscarEmpresaComMenorValor(item.TipoLocacao, item.Datas, item.NumeroPassageiros);
-            return locacoes;
+            {
+                item.Locadora = BuscarLocadoraComMenorValor(item.TipoLocacao, item.Datas, item.NumeroPassageiros);
+                retorno.Add(_mapper.Map<LocacaoViewModel>(item));
+            }
+            
+            return retorno;
         }
 
         private static IEnumerable<Locacao> ObterInformacoesLocacaoDoArquivo(StreamReader lerArquivo)
@@ -30,7 +40,7 @@ namespace LocadoraCarros.Services.Services
             var locacoes = new List<Locacao>();
             while (!lerArquivo.EndOfStream)
             {
-                var linha = lerArquivo.ReadLine().Split(':');
+                string[] linha = lerArquivo.ReadLine().Split(':');
                 locacoes.Add(new Locacao
                 {
                     Datas = PegarListaDatas(linha[2].Split(',')),
@@ -47,23 +57,22 @@ namespace LocadoraCarros.Services.Services
             List<DateTime> listaDatas = new List<DateTime>();
 
             foreach (string item in datas)
-                listaDatas.Add(DateTime.ParseExact(item.Trim(), "ddMMMyyyy(ddd)", CultureInfo.InvariantCulture));
+                listaDatas.Add(DateTime.Parse(item.Trim().Remove(9)));
 
             return listaDatas;
         }
 
-        public static Empresa BuscarEmpresaComMenorValor(TipoLocacao tipo ,IEnumerable<DateTime> datas, int numeroPassageiros)
+        private static Empresa BuscarLocadoraComMenorValor(TipoLocacao tipo ,IEnumerable<DateTime> datas, int numeroPassageiros)
         {
             List<Empresa> empresas = new List<Empresa>();
             foreach (var item in (Loja[])Enum.GetValues(typeof(Loja)))
                 empresas.Add(new Empresa(item, tipo, datas));
 
-            empresas = empresas.Where(e => e.NumeroMaximoPassageiros <= numeroPassageiros).ToList();
-
-            var menorValor = empresas.Select(e => e.ValorLocacao).Min();
+            var menorValor = empresas
+                .Where(e => e.NumeroMaximoPassageiros >= numeroPassageiros)
+                .Select(e => e.ValorLocacao).Min();
 
             return empresas.Where(e => e.ValorLocacao == menorValor).FirstOrDefault();
         }
-
     }
 }
